@@ -1,140 +1,139 @@
 //Code by Samarth Dave
 import java.util.Scanner;
 public class LinkedListMain {
+	static Scanner s;
 	public static void main(String[]args) {
 		System.out.println("Linked List by Samarth Dave");
 		LinkedList<String> list = new LinkedList<>();
-		Scanner s = new Scanner(System.in);
-		int i = -1, q;
-		String b = "";
-		while(i != 0) {
-			i = -1; q = -1;	b = "";
+		s = new Scanner(System.in);
+		int i, q;
+		do {
+			i = -1; q = -1;
 			System.out.printf("\n%20s\n1.  %-13s  2.  %-13s\n3.  %-13s  4.  %-13s", "-Menu-", "Size", "Print", "Print First", "Print Last");
 			System.out.printf("\n5.  %-13s  6.  %-13s\n7.  %-13s  8.  %-13s", "Get Location", "Remove First", "Remove Last", "Remove X");
 			System.out.printf("\n9.  %-13s  10. %-13s\n11. %-13s  12. %-13s", "Add First", "Add Last", "Insert", "Set X");
 			System.out.printf("\n13. %-13s  14. %-13s\n0. %-13s\n", "Is Empty", "Clear", "Exit");
-			i = validInt(s, "Enter selection: ");
+			i = validInt("Enter selection: ");
 			switch(i) {
 				case 1:
-					System.out.println("\nThe size if the list is " + list.size() + ".");
+					//size
+					out("The size if the list is " + list.size() + ".");
 					break;
 				case 2:
-					list.print();
+					//print
+					out("The data in the linked list is: " + list + ".");
 					break;
 				case 3:
-					if(list.getFirst() == null)
-						System.out.println("\nThe list is empty. You can't get first.");
+					//print first
+					if(list.empty())
+						out("The list is empty. You can't get first.");
 					else
-						System.out.println("\nThe first item is: " + list.getFirst() + ".");
+						out("The first item in the list is: " + list.getFirst() + ".");
 					break;
 				case 4:
-					if(list.getLast() == null)
-						System.out.println("\nThe list is empty. You can't get last.");
+					//print last
+					if(list.empty())
+						out("The list is empty. You can't get last.");
 					else
-						System.out.println("\nThe last item is: " + list.getLast() + ".");
+						out("The last item in the list is: " + list.getLast() + ".");
 					break;
 				case 5:
-					if(!list.empty()) {
-						q = validInt(s, "Enter a position you want to get: ");
-						if(list.get(q) == null)
-							System.out.println("\nError, enter a valid input.");
-						else
-							System.out.println("\nThe name at the position is: " + list.get(q) + ".");
-					} else {
-						System.out.println("\nThe list is empty. You can't get anything.");
+					//get location
+					if(list.empty()) {
+						out("The list is empty. You can't get.");
+						break;
 					}
+					int d = validInt("Enter the index you want: ");
+					if(d < 0 || d > list.size()-1)
+						out("Error, out of bounds.");
+					else
+						out("The value at index " + d + " is " + list.get(d) + ".");
 					break;
 				case 6:
-					b = list.removeFirst();
-					if(b == null) {
-						System.out.println("\nLooks like there was nothing to remove.");
-					} else {
-						System.out.println("\n" + b + " was removed from first.");
-					}
+					//remove first
+					if(list.empty())
+						out("The list is empty, you can't remove.");
+					else
+						out(list.removeFirst() + " was removed.");
 					break;
 				case 7:
-					b = list.removeLast();
-					if(b == null) {
-						System.out.println("\nLooks like there was nothing to remove.");
-					} else {
-						System.out.println("\n" + b + " was removed from last.");
-					}
+					//remove last
+					if(list.empty())
+						out("The list is empty, you can't remove.");
+					else
+						out(list.removeLast() + " was removed.");
 					break;
 				case 8:
 					//remove x
 					if(list.empty()) {
-						System.out.println("\nThe list is empty. You can't remove anything.");
+						out("The list is empty. You can't remove.");
 						break;
 					}
-					q = validInt(s, "Enter the position you want to remove: ");
-					b = list.remove(q);
-					if(b == null)
-						System.out.println("\nError, enter a valid input.");
-					else
-						System.out.println("Successfully removed " + b + ".");
+					int e = validInt("Enter the index you want to remove: ");
+					if(e < 0 || e > list.size()-1) {
+						out("Error, out of bounds.");
+						break;
+					}
+					out(list.remove(e) + " was removed.");
 					break;
 				case 9:
 					//add first
 					System.out.print("\nEnter a name: ");
-					b = s.nextLine();
+					String b = s.nextLine();
 					list.addFirst(b);
-					System.out.println("\n" + b + " was added to first.");
+					out(b + " was added to first.");
 					break;
 				case 10:
 					//add last
 					System.out.print("\nEnter a name: ");
-					b = s.nextLine();
-					list.addLast(b);
-					System.out.println("\n" + b + " was added to last.");
+					String c = s.nextLine();
+					list.addLast(c);
+					out(c + " was added to last.");
 					break;
 				case 11:
 					//insert
-					if(list.empty()) {
-						System.out.print("\nThe list is empty. Enter value to add at 0: ");
-						b = s.nextLine();
-						list.addFirst(b);
-					} else {
-						q = validInt(s, "The the location you want to add: ");
-						if(q < 0 || q > list.size()) {
-							System.out.println("\nInvalid input.");
-							break;
-						}
-						System.out.print("Enter the string you want to add: ");
-						b = s.nextLine();
-						list.add(q, b);
+					int h = validInt("Enter the index you want to insert at: ");
+					if(h < 0 || h > list.size()) {
+						out("Error, out of bounds.");
+						break;
 					}
+					System.out.print("\nEnter a name: ");
+					String j = s.nextLine();
+					list.add(h, j);
+					out(j + " was added.");
 					break;
 				case 12:
 					//set x
 					if(list.empty()) {
-						System.out.println("\nList is empty. You can't set in an empty list.");
-					} else {
-						q = validInt(s, "Enter the location you want to set: ");
-						if(q < 0 || q > list.size()-1) {
-							System.out.println("\nInvalid index.");
-						} else {
-							System.out.print("Enter the value you want to set: ");
-							b = s.nextLine();
-							System.out.println("\n" + list.set(q, b) + " was replaced with " + b + ".");
-						}
+						out("The list is empty. You can't set.");
+						break;
 					}
+					int f = validInt("Enter the index you want to set: ");
+					if(f < 0 || f > list.size()-1) {
+						out("Error, out of bounds.");
+						break;
+					}
+					System.out.print("\nEnter a replacement string: ");
+					String g = s.nextLine();
+					out(list.set(f, g) + " was replaced with " + g + ".");
 					break;
 				case 13:
+					//is empty
 					if(list.empty())
-						System.out.println("\nThe list is empty.");
+						out("The list is empty.");
 					else
-						System.out.println("\nThe list is not empty.");
+						out("The list is not empty.");
 					break;
 				case 14:
+					//clear
 					list.clear();
-					System.out.println("\nThe list has been emptied.");
+					out("The list has been emptied.");
 					break;
 			}
-			
-		}
+		} while(i != 0);
 		s.close();
 	}
-	public static int validInt(Scanner s, String out) {
+	public static int validInt(String out) {
 		int r = -1;
 		System.out.print(out);
 		while(!s.hasNextInt()) {
@@ -144,5 +143,8 @@ public class LinkedListMain {
 		r = s.nextInt();
 		s.nextLine();
 		return r;
+	}
+	public static void out(String s) {
+		System.out.println("\n" + s);
 	}
 }
